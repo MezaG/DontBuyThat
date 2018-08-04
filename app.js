@@ -3,10 +3,18 @@ const app = express();
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/test');
 
-const Cat = mongoose.model('Cat', { name: String });
+var Transaction = require('./models/transactions').Transaction;
 
-const Kitty = new Cat({ name: 'Salem' });
-Kitty.save().then(() => console.log('Salem says meow'));
+var transaction = new Transaction({
+	amount: 10,
+	description: 'This is a test',
+	from_to: {
+		from: 'Fernando',
+		to: 'Test'
+	}
+});
+
+transaction.save().then(() => console.log('Transaction completed'));
 
 app.get('/', (req, res) => res.send('Saving is the best'));
 
