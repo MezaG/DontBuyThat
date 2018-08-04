@@ -1,0 +1,27 @@
+{
+  "name": "dontbuythat",
+  "version": "1.0.0",
+  "description": "A web app to make personal finances easier",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MezaG/DontBuyThat.git"
+  },
+  "keywords": [
+    "personal",
+    "finances"
+  ],
+  "author": "Fernando Meza Genis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MezaG/DontBuyThat/issues"
+  },
+  "homepage": "https://github.com/MezaG/DontBuyThat#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "mongoose": "^5.2.6"
+  }
+}
