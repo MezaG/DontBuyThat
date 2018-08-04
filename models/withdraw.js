@@ -10,8 +10,15 @@ const WithdrawSchema = new moongose.Schema({
 		},
 		required: true },
 	date: { type: Date, default: Date.now },
-	card: Number,
-	motive: String
+	card: { type:  Number,
+		validate: {
+			validator: (value) => {
+				return /\d{4}/.test(value);
+			},
+			message: 'only last 4 digits'
+		},
+		required: true },
+	motive: { type: String, required: true }
 });
 
 const Withdraw = moongose.model('Withdraw', WithdrawSchema);

@@ -37,8 +37,71 @@ describe('withdraw with amount as greater than zero', () => {
 	it('should pass amount is gt zero', (done) => {
 		var withdraw = new Withdraw();
 		withdraw.amount = 1;
-		var error = withdraw.validateSync();
-		assert.notExists(error);
+		withdraw.validate( (err) => {
+			expect(err.errors.amount).to.not.exist;
+			done();
+		});
+	});
+});
+
+describe('withdraw without specify date', () => {
+	it('should not be undefined', (done) => {
+		var withdraw = new Withdraw();
+		var date = withdraw.date;
+		assert.isDefined(date);
 		done();
+	});
+});
+
+describe('withdraw without card', () => {
+	it('should throw error message', (done) => {
+		var withdraw = new Withdraw();
+		withdraw.validate( (err) => {
+			expect(err.errors.card).to.exist;
+			done();
+		});
+	});
+});
+
+describe('withdraw with card number length lt 4', () => {
+	it('should throw error message', (done) => {
+		var withdraw = new Withdraw();
+		withdraw.card = 123;
+		withdraw.validate( (err) => {
+			expect(err.errors.card).to.exist;
+			done();
+		});
+	});
+});
+
+describe('withdraw with card number constraint satisfied', () => {
+	it('should not throw error message', (done) => {
+		var withdraw = new Withdraw();
+		withdraw.card = 1234;
+		withdraw.validate( (err) => {
+			expect(err.errors.card).to.not.exist;
+			done();
+		});
+	});
+});
+
+describe('withdraw without motive', () => {
+	it('should throw error message', (done) => {
+		var withdraw = new Withdraw();
+		withdraw.validate( (err) => {
+			expect(err.errors.motive).to.exist;
+			done();
+		});
+	});
+});
+
+describe('withdraw with motive', () => {
+	it('should not throw error message', (done) => {
+		var withdraw = new Withdraw();
+		withdraw.motive = 'this is a test';
+		withdraw.validate( (err) => {
+			expect(err.errors.motive).to.not.exist;
+			done();
+		});
 	});
 });
