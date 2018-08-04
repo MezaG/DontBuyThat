@@ -2,6 +2,8 @@ const expect = require('chai').expect;
 const assert = require('chai').assert;
 
 const Withdraw = require('../models/withdraw').Withdraw;
+const Transaction = require('../models/transactions').Transaction;
+const Mongoose = require('mongoose');
 
 describe('withdraw without amount', () => {
 	it('should be invalid if the amount is empty', (done) => {
@@ -101,6 +103,129 @@ describe('withdraw with motive', () => {
 		withdraw.motive = 'this is a test';
 		withdraw.validate( (err) => {
 			expect(err.errors.motive).to.not.exist;
+			done();
+		});
+	});
+});
+
+describe('withdraw without user', () => {
+	it('should throw error message', (done) => {
+		var withdraw = new Withdraw();
+		withdraw.validate( (err) => {
+			expect(err.errors.user_id).to.exist;
+			done();
+		});
+	});
+});
+
+describe('withdraw with user', () => {
+	it('should not throw error message', (done) => {
+		var withdraw = new Withdraw();
+		withdraw.user_id = new Mongoose.Types.ObjectId;
+		withdraw.validate( (err) => {
+			expect(err.errors.user_id).to.not.exist;
+			done();
+		});
+	});
+});
+
+describe('Transaction without amount', () => {
+	it('should throw error message', (done) => {
+		var transaction = new Transaction();
+		transaction.validate( (err) => {
+			expect(err.errors.amount).to.exist;
+			done();
+		});
+	});
+});
+
+describe('Transaction with amount', () => {
+	it('should not throw error message', (done) => {
+		var transaction = new Transaction();
+		transaction.amount = 1;
+		transaction.validate( (err) => {
+			expect(err.errors.amount).to.not.exist;
+			done();
+		});
+	});
+});
+
+describe('Transaction with amount lt zero', () => {
+	it('should throw error message', (done) => {
+		var transaction = new Transaction();
+		transaction.amount = -1;
+		transaction.validate( (err) => {
+			expect(err.errors.amount).to.exist;
+			done();
+		});
+	});
+});
+
+describe('Transaction with amount gt zero', () => {
+	it('should not throw error message', (done) => {
+		var transaction = new Transaction();
+		transaction.amount = 4;
+		transaction.validate( (err) => {
+			expect(err.errors.amount).to.not.exist;
+			done();
+		});
+	});
+});
+
+describe('Transaction without description', () => {
+	it('should throw error message', (done) => {
+		var transaction = new Transaction();
+		transaction.validate( (err) => {
+			expect(err.errors.description).to.exist;
+			done();
+		});
+	});
+});
+
+
+describe('Transaction with description', () => {
+	it('should not throw error message', (done) => {
+		var transaction = new Transaction();
+		transaction.description = 'this is a test';
+		transaction.validate( (err) => {
+			expect(err.errors.description).to.not.exist;
+			done();
+		});
+	});
+});
+
+
+describe('Transaction without date', () => {
+	it('should not throw error message', (done) => {
+		var transaction = new Transaction();
+		transaction.validate( (err) => {
+			expect(err.errors.date).to.not.exist;
+			done();
+		});
+	});
+});
+
+describe('Transaction with date', () => {
+	it('should not throw error message', (done) => {
+		var transaction = new Transaction();
+		transaction.description = 'this is a test';
+		transaction.validate( (err) => {
+			expect(err.errors.description).to.not.exist;
+			done();
+		});
+	});
+});
+
+describe('Transaction with from_to', () => {
+	it('should not throw error message', (done) => {
+		var transaction = new Transaction();
+		var fromto = {
+			from: 'Fer',
+			to: 'Test'
+		}
+		transaction.from_to = fromto;
+		transaction.validate( (err) => {
+			expect(err.errors.from_to).to.not.exist;
 			done();
 		});
 	});

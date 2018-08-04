@@ -18,7 +18,8 @@ const WithdrawSchema = new moongose.Schema({
 			message: 'only last 4 digits'
 		},
 		required: true },
-	motive: { type: String, required: true }
+	motive: { type: String, required: true },
+	user_id: { type: moongose.Schema.Types.ObjectId, required: true }
 });
 
 const Withdraw = moongose.model('Withdraw', WithdrawSchema);
