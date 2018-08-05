@@ -38,7 +38,8 @@ const MonthlyDueSchema = new mongoose.Schema({
 			required: true },
 		date: { type: Date, default: Date.now, required: true }
 	},
-	date: { type: Date, default: Date.now }
+	date: { type: Date, default: Date.now },
+	user_id: { type: mongoose.Schema.Types.ObjectId, required: true }
 });
 
 const MonthlyDue = mongoose.model('MonthlyDue', MonthlyDueSchema);
