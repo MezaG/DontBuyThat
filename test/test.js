@@ -219,11 +219,10 @@ describe('Transaction with date', () => {
 describe('Transaction with from_to', () => {
 	it('should not throw error message', (done) => {
 		var transaction = new Transaction();
-		var fromto = {
+		transaction.from_to = {
 			from: 'Fer',
 			to: 'Test'
 		}
-		transaction.from_to = fromto;
 		transaction.validate( (err) => {
 			expect(err.errors.from_to).to.not.exist;
 			done();
